@@ -5,20 +5,21 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A DTO for the {@link com.users.domain.Produit} entity.
+ * A DTO for the {@link com.users.domain.Legume} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ProduitDTO implements Serializable {
+public class LegumeDTO implements Serializable {
 
     private Long id;
 
+    @NotNull
     private String libelle;
 
     @NotNull
-    private Integer quantite;
+    private Double price;
 
     @NotNull
-    private Double price;
+    private Integer quantite;
 
     public Long getId() {
         return id;
@@ -36,14 +37,6 @@ public class ProduitDTO implements Serializable {
         this.libelle = libelle;
     }
 
-    public Integer getQuantite() {
-        return quantite;
-    }
-
-    public void setQuantite(Integer quantite) {
-        this.quantite = quantite;
-    }
-
     public Double getPrice() {
         return price;
     }
@@ -52,20 +45,28 @@ public class ProduitDTO implements Serializable {
         this.price = price;
     }
 
+    public Integer getQuantite() {
+        return quantite;
+    }
+
+    public void setQuantite(Integer quantite) {
+        this.quantite = quantite;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof ProduitDTO)) {
+        if (!(o instanceof LegumeDTO)) {
             return false;
         }
 
-        ProduitDTO produitDTO = (ProduitDTO) o;
+        LegumeDTO legumeDTO = (LegumeDTO) o;
         if (this.id == null) {
             return false;
         }
-        return Objects.equals(this.id, produitDTO.id);
+        return Objects.equals(this.id, legumeDTO.id);
     }
 
     @Override
@@ -76,11 +77,11 @@ public class ProduitDTO implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "ProduitDTO{" +
+        return "LegumeDTO{" +
             "id=" + getId() +
             ", libelle='" + getLibelle() + "'" +
-            ", quantite=" + getQuantite() +
             ", price=" + getPrice() +
+            ", quantite=" + getQuantite() +
             "}";
     }
 }

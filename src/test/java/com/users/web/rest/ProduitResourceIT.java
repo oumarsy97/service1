@@ -37,11 +37,11 @@ class ProduitResourceIT {
     private static final String DEFAULT_LIBELLE = "AAAAAAAAAA";
     private static final String UPDATED_LIBELLE = "BBBBBBBBBB";
 
+    private static final Integer DEFAULT_QUANTITE = 1;
+    private static final Integer UPDATED_QUANTITE = 2;
+
     private static final Double DEFAULT_PRICE = 1D;
     private static final Double UPDATED_PRICE = 2D;
-
-    private static final Integer DEFAULT_QUATITE = 1;
-    private static final Integer UPDATED_QUATITE = 2;
 
     private static final String ENTITY_API_URL = "/api/produits";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -75,7 +75,7 @@ class ProduitResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Produit createEntity() {
-        return new Produit().libelle(DEFAULT_LIBELLE).price(DEFAULT_PRICE).quatite(DEFAULT_QUATITE);
+        return new Produit().libelle(DEFAULT_LIBELLE).quantite(DEFAULT_QUANTITE).price(DEFAULT_PRICE);
     }
 
     /**
@@ -85,7 +85,7 @@ class ProduitResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Produit createUpdatedEntity() {
-        return new Produit().libelle(UPDATED_LIBELLE).price(UPDATED_PRICE).quatite(UPDATED_QUATITE);
+        return new Produit().libelle(UPDATED_LIBELLE).quantite(UPDATED_QUANTITE).price(UPDATED_PRICE);
     }
 
     @BeforeEach
@@ -145,10 +145,10 @@ class ProduitResourceIT {
 
     @Test
     @Transactional
-    void checkLibelleIsRequired() throws Exception {
+    void checkQuantiteIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
-        produit.setLibelle(null);
+        produit.setQuantite(null);
 
         // Create the Produit, which fails.
         ProduitDTO produitDTO = produitMapper.toDto(produit);
@@ -179,23 +179,6 @@ class ProduitResourceIT {
 
     @Test
     @Transactional
-    void checkQuatiteIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        produit.setQuatite(null);
-
-        // Create the Produit, which fails.
-        ProduitDTO produitDTO = produitMapper.toDto(produit);
-
-        restProduitMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(produitDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllProduits() throws Exception {
         // Initialize the database
         insertedProduit = produitRepository.saveAndFlush(produit);
@@ -207,8 +190,8 @@ class ProduitResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(produit.getId().intValue())))
             .andExpect(jsonPath("$.[*].libelle").value(hasItem(DEFAULT_LIBELLE)))
-            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)))
-            .andExpect(jsonPath("$.[*].quatite").value(hasItem(DEFAULT_QUATITE)));
+            .andExpect(jsonPath("$.[*].quantite").value(hasItem(DEFAULT_QUANTITE)))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE)));
     }
 
     @Test
@@ -224,8 +207,8 @@ class ProduitResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(produit.getId().intValue()))
             .andExpect(jsonPath("$.libelle").value(DEFAULT_LIBELLE))
-            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE))
-            .andExpect(jsonPath("$.quatite").value(DEFAULT_QUATITE));
+            .andExpect(jsonPath("$.quantite").value(DEFAULT_QUANTITE))
+            .andExpect(jsonPath("$.price").value(DEFAULT_PRICE));
     }
 
     @Test
@@ -247,7 +230,7 @@ class ProduitResourceIT {
         Produit updatedProduit = produitRepository.findById(produit.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedProduit are not directly saved in db
         em.detach(updatedProduit);
-        updatedProduit.libelle(UPDATED_LIBELLE).price(UPDATED_PRICE).quatite(UPDATED_QUATITE);
+        updatedProduit.libelle(UPDATED_LIBELLE).quantite(UPDATED_QUANTITE).price(UPDATED_PRICE);
         ProduitDTO produitDTO = produitMapper.toDto(updatedProduit);
 
         restProduitMockMvc
@@ -333,7 +316,7 @@ class ProduitResourceIT {
         Produit partialUpdatedProduit = new Produit();
         partialUpdatedProduit.setId(produit.getId());
 
-        partialUpdatedProduit.quatite(UPDATED_QUATITE);
+        partialUpdatedProduit.price(UPDATED_PRICE);
 
         restProduitMockMvc
             .perform(
@@ -361,7 +344,7 @@ class ProduitResourceIT {
         Produit partialUpdatedProduit = new Produit();
         partialUpdatedProduit.setId(produit.getId());
 
-        partialUpdatedProduit.libelle(UPDATED_LIBELLE).price(UPDATED_PRICE).quatite(UPDATED_QUATITE);
+        partialUpdatedProduit.libelle(UPDATED_LIBELLE).quantite(UPDATED_QUANTITE).price(UPDATED_PRICE);
 
         restProduitMockMvc
             .perform(

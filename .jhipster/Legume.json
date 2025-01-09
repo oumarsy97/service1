@@ -1,6 +1,6 @@
 {
   "annotations": {
-    "changelogDate": "20250108091052"
+    "changelogDate": "20250108124335"
   },
   "clientRootFolder": "service1",
   "databaseType": "sql",
@@ -8,22 +8,23 @@
   "fields": [
     {
       "fieldName": "libelle",
-      "fieldType": "String"
-    },
-    {
-      "fieldName": "quantite",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
     },
     {
       "fieldName": "price",
       "fieldType": "Double",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "quantite",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
     }
   ],
   "jpaMetamodelFiltering": false,
   "microserviceName": "service1",
-  "name": "Produit",
+  "name": "Legume",
   "pagination": "no",
   "readOnly": false,
   "relationships": [],

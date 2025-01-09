@@ -7,13 +7,13 @@ import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
- * A Produit.
+ * A Legume.
  */
 @Entity
-@Table(name = "produit")
+@Table(name = "legume")
 @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Produit implements Serializable {
+public class Legume implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -22,16 +22,17 @@ public class Produit implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "libelle")
-    private String libelle;
-
     @NotNull
-    @Column(name = "quantite", nullable = false)
-    private Integer quantite;
+    @Column(name = "libelle", nullable = false, unique = true)
+    private String libelle;
 
     @NotNull
     @Column(name = "price", nullable = false)
     private Double price;
+
+    @NotNull
+    @Column(name = "quantite", nullable = false)
+    private Integer quantite;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -39,7 +40,7 @@ public class Produit implements Serializable {
         return this.id;
     }
 
-    public Produit id(Long id) {
+    public Legume id(Long id) {
         this.setId(id);
         return this;
     }
@@ -52,7 +53,7 @@ public class Produit implements Serializable {
         return this.libelle;
     }
 
-    public Produit libelle(String libelle) {
+    public Legume libelle(String libelle) {
         this.setLibelle(libelle);
         return this;
     }
@@ -61,30 +62,30 @@ public class Produit implements Serializable {
         this.libelle = libelle;
     }
 
-    public Integer getQuantite() {
-        return this.quantite;
-    }
-
-    public Produit quantite(Integer quantite) {
-        this.setQuantite(quantite);
-        return this;
-    }
-
-    public void setQuantite(Integer quantite) {
-        this.quantite = quantite;
-    }
-
     public Double getPrice() {
         return this.price;
     }
 
-    public Produit price(Double price) {
+    public Legume price(Double price) {
         this.setPrice(price);
         return this;
     }
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public Integer getQuantite() {
+        return this.quantite;
+    }
+
+    public Legume quantite(Integer quantite) {
+        this.setQuantite(quantite);
+        return this;
+    }
+
+    public void setQuantite(Integer quantite) {
+        this.quantite = quantite;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
@@ -94,10 +95,10 @@ public class Produit implements Serializable {
         if (this == o) {
             return true;
         }
-        if (!(o instanceof Produit)) {
+        if (!(o instanceof Legume)) {
             return false;
         }
-        return getId() != null && getId().equals(((Produit) o).getId());
+        return getId() != null && getId().equals(((Legume) o).getId());
     }
 
     @Override
@@ -109,11 +110,11 @@ public class Produit implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "Produit{" +
+        return "Legume{" +
             "id=" + getId() +
             ", libelle='" + getLibelle() + "'" +
-            ", quantite=" + getQuantite() +
             ", price=" + getPrice() +
+            ", quantite=" + getQuantite() +
             "}";
     }
 }

@@ -18,8 +18,11 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.core.env.Environment;
 import tech.jhipster.config.DefaultProfileUtil;
 import tech.jhipster.config.JHipsterConstants;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+
 
 @SpringBootApplication
+@EnableDiscoveryClient
 @EnableConfigurationProperties({ LiquibaseProperties.class, ApplicationProperties.class })
 public class Service1App {
 
